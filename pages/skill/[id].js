@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { map, join } from 'ramda'
+import { map, join, prop } from 'ramda'
 import { idFetcher } from '../../utils/fetcher'
 import useSWR from 'swr'
 import styles from '../../styles/Skill.module.css'
@@ -52,38 +52,33 @@ const Skill = () => {
           module => (
             <div className={styles.card} onClick={() => setCurModule(module)}>
               <h2>{module.name}</h2>
-              <p>
-                {join(
-                  ', ',
-                  map(({ name }) => name, module.subjects),
-                )}
-              </p>
+              <p>{join(', ', map(prop('name'), module.subjects))}</p>
             </div>
           ),
           modules || [],
         )}
       </div>
-      {curModule.name && (
-        <div className={styles.module}>
-          {map(
-            ({ name, time, links }) => (
-              <div key={name} className={styles.subject}>
-                <h4>{name}</h4>
-                <p>{time ? `${time} min` : ''}</p>
-                {map(
-                  ({ href, free, referrer }) => (
-                    <a target="_blank" href={href}>
-                      <p>{`Udemy${free ? ' - free' : ''}`}</p>
-                    </a>
-                  ),
-                  links || [],
-                )}
-              </div>
-            ),
-            curModule.subjects,
-          )}
-        </div>
-      )}
+
+      <div className={styles.module}>
+        {!curModule.name && <h5>Get started by choosing a module ⬆ </h5>}
+        {map(
+          ({ name, time, links }) => (
+            <div key={name} className={styles.subject}>
+              <h4>{name}</h4>
+              <p>{time ? `${time} min` : ''}</p>
+              {map(
+                ({ href, free, referrer }) => (
+                  <a target="_blank" href={href}>
+                    <p>{`Udemy${free ? ' - free' : ''}`}</p>
+                  </a>
+                ),
+                links || [],
+              )}
+            </div>
+          ),
+          curModule.subjects || [],
+        )}
+      </div>
     </div>
   )
 }
