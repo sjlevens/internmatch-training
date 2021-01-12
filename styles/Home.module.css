@@ -8,7 +8,8 @@
 }
 
 .main {
-  padding: 5rem 0;
+  padding: 2.5rem 0;
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -17,12 +18,16 @@
 }
 
 .footer {
-  width: 100%;
-  height: 100px;
-  border-top: 1px solid #eaeaea;
+  padding: 0.5rem;
+  border: 1px solid #eaeaea;
+  border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 .footer img {
@@ -35,7 +40,7 @@
   align-items: center;
 }
 
-.title a {
+.subTitle a {
   color: #0070f3;
   text-decoration: none;
 }
@@ -49,7 +54,8 @@
 .title {
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 3.5rem;
+  opacity: 0.8;
 }
 
 .title,
@@ -77,7 +83,7 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
 }
 
 .card {
@@ -87,31 +93,82 @@
   text-align: left;
   color: inherit;
   text-decoration: none;
-  border: 1px solid #eaeaea;
+  border: 1.5px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+  min-height: 12rem;
+  cursor: pointer;
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #236dc2;
+  border-color: #236dc2;
 }
 
 .card h3 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .card p {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1.5;
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .logo {
-  height: 1em;
+  height: 2em;
+}
+
+.search {
+  margin: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid #eaeaea;
+  width: 20rem;
+  transition: color 0.15s ease, border-color 0.15s ease, width 0.15s ease;
+}
+
+.search:hover,
+.search:focus,
+.search:active {
+  border-color: #236dc2;
+}
+
+.search:focus,
+.search:active {
+  width: 25rem;
+}
+
+.connect {
+  color: orange;
+  transition: color 0.15s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+.connect p {
+  margin: 0.5rem;
+}
+.connect:hover {
+  color: #236dc2;
+}
+
+.connect span {
+  color: transparent;
+  transition: color 0.15s ease;
+}
+.connect:hover span {
+  color: #236dc2;
 }
 
 @media (max-width: 600px) {
