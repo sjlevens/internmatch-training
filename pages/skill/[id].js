@@ -13,8 +13,10 @@ const SKILL_QUERY = `
       id
       emoji
       modules {
+        id
         name
         subjects {
+          id
           name
           time
           links {
@@ -50,7 +52,11 @@ const Skill = () => {
       <div className={styles.cards}>
         {map(
           module => (
-            <div className={styles.card} onClick={() => setCurModule(module)}>
+            <div
+              key={module.id + 'header'}
+              className={styles.card}
+              onClick={() => setCurModule(module)}
+            >
               <h2>{module.name}</h2>
               <p>{join(', ', map(prop('name'), module.subjects))}</p>
             </div>
@@ -58,12 +64,11 @@ const Skill = () => {
           modules || [],
         )}
       </div>
-
       <div className={styles.module}>
         {!curModule.name && <h5>Get started by choosing a module ⬆ </h5>}
         {map(
-          ({ name, time, links }) => (
-            <div key={name} className={styles.subject}>
+          ({ name, time, links, id }) => (
+            <div key={id} className={styles.subject}>
               <h4>{name}</h4>
               <p>{time ? `${time} min` : ''}</p>
               {map(

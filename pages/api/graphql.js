@@ -1,46 +1,11 @@
-import { ApolloServer, gql } from 'apollo-server-micro'
-import skills from '../../lib/db/skills'
-import placementsResolver from '../../lib/graphql/resolvers/placements'
-import skillResolver from '../../lib/graphql/resolvers/skill'
-
-const typeDefs = gql`
-  type Query {
-    skills: [Skill]
-    placements(filter: String!): [Placement]
-    skill(id: ID!): Skill
-  }
-  type Skill {
-    id: String
-    name: String
-    emoji: String
-    modules: [Module]
-  }
-  type Module {
-    name: String
-    subjects: [Subject]
-  }
-  type Subject {
-    name: String
-    time: Int
-    links: [Link]
-  }
-  type Link {
-    free: Boolean
-    href: String
-    referrer: String
-  }
-  type Placement {
-    name: String
-    id: String
-    studies: [Study]
-  }
-  type Study {
-    name: String
-  }
-`
+import { ApolloServer } from 'apollo-server-micro'
+import { skills } from '../../lib/db'
+import { placementsResolver, skillResolver, userResolver } from '../../lib/graphql/resolvers'
+import typeDefs from '../../lib/graphql/typedefs'
 
 const resolvers = {
   Query: {
+    user: userResolver,
     skills: () => skills,
     placements: placementsResolver,
     skill: skillResolver,

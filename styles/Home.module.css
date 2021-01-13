@@ -126,26 +126,6 @@
   height: 2em;
 }
 
-.search {
-  margin: 1rem;
-  border-radius: 1rem;
-  padding: 1rem;
-  border: 1px solid #eaeaea;
-  width: 20rem;
-  transition: color 0.15s ease, border-color 0.15s ease, width 0.15s ease;
-}
-
-.search:hover,
-.search:focus,
-.search:active {
-  border-color: #236dc2;
-}
-
-.search:focus,
-.search:active {
-  width: 25rem;
-}
-
 .connect {
   color: orange;
   transition: color 0.15s ease;

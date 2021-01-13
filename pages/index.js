@@ -4,19 +4,8 @@ import useSWR from 'swr'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import { map, join, prop } from 'ramda'
-import fetcher from '../utils/fetcher'
+import fetcher, { idFetcher } from '../utils/fetcher'
 import SearchResults from '../components/search-results'
-
-const PLACEMENT_SEARCH_QUERY = `
-  query PlacementSearchQuery($filter: String!) {
-    placements(filter: $filter) {
-      name
-      id
-      studies {
-        name
-      }
-    }
-  }`
 
 const SKILLS_QUERY = `{
   skills {
@@ -32,9 +21,23 @@ const SKILLS_QUERY = `{
   }
 }`
 
+const USER_QUERY = `
+query UserQuery($id: ID!) {
+  user(id: $id) {
+    name
+    id
+    completions {
+      type_id
+      type
+    }
+  }
+}`
+
 const Home = () => {
-  const [search, setSearch] = useState('')
   const { data, error } = useSWR(SKILLS_QUERY, fetcher)
+  const userId = 'sam'
+  const { data: userData, error: userError } = useSWR([USER_QUERY, userId], idFetcher)
+  const userName = userData?.user?.name
 
   const skills = data?.skills || []
 
@@ -46,13 +49,20 @@ const Home = () => {
       </Head>
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to InternMatch Training!</h1>
-        <Link href="">
+        {userName ? (
           <div className={styles.connect}>
-            <p>Connect to your InternMatch account</p>
-            <p>to receive credit and track your progress</p>
-            <span>⚡</span>
+            <p>{`Welcome Back ${userName}`}</p>
           </div>
-        </Link>
+        ) : (
+          <Link href="">
+            <div className={styles.connect}>
+              <p>Connect to your InternMatch account</p>
+              <p>to receive credit and track your progress</p>
+              <span>⚡</span>
+            </div>
+          </Link>
+        )}
+
         <div className={styles.grid}>
           {map(
             ({ name, modules, emoji, id }) => (
@@ -66,13 +76,7 @@ const Home = () => {
             skills,
           )}
         </div>
-        <input
-          onChange={e => setSearch(e.target.value)}
-          className={styles.search}
-          type="text"
-          placeholder="Search for a topic..."
-        />
-        <SearchResults query={PLACEMENT_SEARCH_QUERY} search={search} />
+        <SearchResults />
       </main>
       <div className={styles.footer}>
         <a href="https://outcome.life/" target="_blank" rel="noopener noreferrer">
