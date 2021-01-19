@@ -52,10 +52,10 @@ const Placement = () => {
         <p className={styles.link}>⇠ Back to home</p>
       </Link>
       <h1>{name}</h1>
-      <div>
+      <div className={styles.cards}>
         {map(
           ({ name, learnings, id }) => (
-            <div key={id}>
+            <div key={id} className={styles.card}>
               <h4>{`${name}`}</h4>
               {map(
                 ({ name }) => (

@@ -1,11 +1,10 @@
-import axios from 'axios'
-import { UDEMY_AUTH } from '../secrets'
+// import { UDEMY_AUTH, UDEMY_API } from '../secrets'
 const getUdemyCourse = async id => {
-  const request = new Request(`https://www.udemy.com/api-2.0/courses/${id}/`, {
+  const request = new Request(`${process.env.UDEMY_API || 'UDEMY_API'}${id}/`, {
     header: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json;charset=utf-8',
-      Authorization: UDEMY_AUTH,
+      Authorization: process.env.UDEMY_AUTH || 'UDEMY_AUTH',
     },
   })
 
