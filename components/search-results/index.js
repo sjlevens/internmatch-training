@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { map } from 'ramda'
+import { map, slice, length } from 'ramda'
 import useSWR from 'swr'
 import fetcher from '../../utils/fetcher'
 import Link from 'next/link'
-import styles from '../../styles/SearchResults.module.css'
+import styles from './SearchResults.module.css'
 
 const PLACEMENT_SEARCH_QUERY = `
   query PlacementSearchQuery($filter: String!) {
@@ -45,7 +45,12 @@ const SearchResults = () => {
                       <p>{studyName}</p>
                     </Link>
                   ),
-                  studies || [],
+                  slice(0, 4, studies || []),
+                )}
+                {length(studies) > 5 && (
+                  <Link href={`/placement/${id}`}>
+                    <p>{`see more...`}</p>
+                  </Link>
                 )}
               </div>
             </Link>

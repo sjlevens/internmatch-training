@@ -1,6 +1,11 @@
 import { ApolloServer } from 'apollo-server-micro'
 import { skills } from '../../lib/db'
-import { placementsResolver, skillResolver, userResolver } from '../../lib/graphql/resolvers'
+import {
+  placementsResolver,
+  skillResolver,
+  userResolver,
+  placementResolver,
+} from '../../lib/graphql/resolvers'
 import typeDefs from '../../lib/graphql/typedefs'
 
 const resolvers = {
@@ -9,6 +14,7 @@ const resolvers = {
     skills: () => skills,
     placements: placementsResolver,
     skill: skillResolver,
+    placement: placementResolver,
   },
 }
 

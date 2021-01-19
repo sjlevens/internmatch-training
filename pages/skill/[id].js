@@ -5,6 +5,7 @@ import { idFetcher } from '../../utils/fetcher'
 import useSWR from 'swr'
 import styles from '../../styles/Skill.module.css'
 import Link from 'next/link'
+import UdemyLink from '../../components/udemy-link'
 
 const SKILL_QUERY = `
   query SkillQuery($id: ID!) {
@@ -23,6 +24,7 @@ const SKILL_QUERY = `
             href
             free
             referrer
+            id
           }
         }
       }
@@ -69,13 +71,11 @@ const Skill = () => {
         {map(
           ({ name, time, links, id }) => (
             <div key={id} className={styles.subject}>
-              <h4>{name}</h4>
-              <p>{time ? `${time} min` : ''}</p>
+              <h4>{`${name}${time ? ` - ${time} min` : ''}`}</h4>
+              <p></p>
               {map(
-                ({ href, free, referrer }) => (
-                  <a target="_blank" href={href}>
-                    <p>{`Udemy${free ? ' - free' : ''}`}</p>
-                  </a>
+                ({ href, free, id }) => (
+                  <UdemyLink key={id} href={href} free={free} id={id} />
                 ),
                 links || [],
               )}

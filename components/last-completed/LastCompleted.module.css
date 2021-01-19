@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: grey;
+}
+
+.container p {
+  margin: 0.5rem;
+}
+
+.link {
+  width: 6rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, width 0.15s ease;
+  background-color: #508ed5;
+  color: aliceblue;
+}
+
+.link:hover {
+  background-color: #1a5da9;
+  width: 7rem;
+}
