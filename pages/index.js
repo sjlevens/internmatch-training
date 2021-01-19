@@ -42,7 +42,9 @@ query UserQuery($id: ID!) {
 
 const Home = () => {
   const { data, error } = useSWR(SKILLS_QUERY, fetcher)
+
   const [userId, setUserId] = useState('')
+
   const { data: userData, error: userError } = useSWR([USER_QUERY, userId], idFetcher)
   const { name, completions, skills: userSkills } = userData?.user || {}
   const skills = data?.skills || []
@@ -92,8 +94,8 @@ const Home = () => {
         <SearchResults />
       </main>
       <div className={styles.footer}>
-        <a href="https://outcome.life/" target="_blank" rel="noopener noreferrer">
-          <img src="/outcome_life.svg" alt="Vercel Logo" className={styles.logo} />
+        <a href="https://outcome.life/" target="_blank">
+          <img src="/outcome_life.svg" alt="Outcome Life Logo" className={styles.logo} />
         </a>
       </div>
     </div>

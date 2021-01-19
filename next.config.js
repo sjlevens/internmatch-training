@@ -6,4 +6,8 @@ module.exports = withPWA({
     dest: 'public',
     runtimeCaching,
   },
+  env: {
+    UDEMY_AUTH: process.env.UDEMY_AUTH,
+    UDEMY_API: process.env.UDEMY_API,
+  },
 })
