@@ -4,6 +4,7 @@ import { idFetcher } from '../../utils/fetcher'
 import useSWR from 'swr'
 import styles from '../../styles/Placement.module.css'
 import Link from 'next/link'
+import { useUser } from '../utils/auth/useUser'
 
 const PLACEMENT_QUERY = `
   query PlacementQuery($id: ID!) {
@@ -30,6 +31,8 @@ const PLACEMENT_QUERY = `
 const Placement = () => {
   const router = useRouter()
   const { id, study } = router.query
+
+  const { user } = useUser()
 
   const { data, error } = useSWR([PLACEMENT_QUERY, id], idFetcher)
 

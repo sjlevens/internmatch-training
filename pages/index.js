@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import initFirebase from '../utils/auth/initFirebase'
+import FirebaseAuth from '../components/FirebaseAuth'
+
 import Head from 'next/head'
 import useSWR from 'swr'
 import Link from 'next/link'
@@ -7,6 +10,7 @@ import { map, join, prop } from 'ramda'
 import fetcher, { idFetcher } from '../utils/fetcher'
 import SearchResults from '../components/search-results'
 import LastCompleted from '../components/last-completed'
+import { useUser } from '../utils/auth/useUser'
 
 const SKILLS_QUERY = `{
   skills {
@@ -22,32 +26,17 @@ const SKILLS_QUERY = `{
   }
 }`
 
-const USER_QUERY = `
-query UserQuery($id: ID!) {
-  user(id: $id) {
-    name
-    id
-    completions {
-      type_id
-      type
-      amount
-      completed_at
-    }
-    skills {
-      interpersonal
-      technical
-    }
-  }
-}`
+// Init the Firebase app.
+initFirebase()
 
 const Home = () => {
   const { data, error } = useSWR(SKILLS_QUERY, fetcher)
+  const { user, logout } = useUser()
+  const { email, completions, displayName } = user || {}
 
-  const [userId, setUserId] = useState('')
-
-  const { data: userData, error: userError } = useSWR([USER_QUERY, userId], idFetcher)
-  const { name, completions, skills: userSkills } = userData?.user || {}
   const skills = data?.skills || []
+
+  console.log(user)
 
   return (
     <div className={styles.container}>
@@ -57,21 +46,19 @@ const Home = () => {
       </Head>
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to InternMatch Academy!</h1>
-        {name ? (
-          <div onClick={() => setUserId('')}>
+        {email ? (
+          <div onClick={logout}>
             <div className={styles.connect}>
-              <p>{`Welcome Back ${name}`}</p>
+              <p>{`Welcome Back ${displayName}`}</p>
             </div>
-            <LastCompleted completions={completions} />
           </div>
         ) : (
-          <Link href="">
-            <div className={styles.connect} onClick={() => setUserId('sam')}>
-              <p>Connect to your InternMatch account</p>
-              <p>to receive credit and track your progress</p>
-              <span>⚡</span>
-            </div>
-          </Link>
+          <div className={styles.connect}>
+            <p>Sign In</p>
+            <p>to receive credit and track your progress</p>
+            <FirebaseAuth />
+            <span>⚡</span>
+          </div>
         )}
         <div className={styles.grid}>
           {map(
@@ -79,11 +66,11 @@ const Home = () => {
               <Link href={`/skill/${id}`} key={id}>
                 <div className={styles.card}>
                   <h3>{`${name} ${emoji}`}</h3>
-                  {userSkills ? (
+                  {/* {userSkills ? (
                     <p className={styles.completed}>
                       {userSkills[id] ? `${userSkills[id]}% Completed!` : `Not started yet`}
                     </p>
-                  ) : null}
+                  ) : null} */}
                   <p>{join(', ', map(prop('name'), modules || []))}</p>
                 </div>
               </Link>
