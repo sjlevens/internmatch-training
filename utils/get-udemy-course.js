@@ -1,5 +1,7 @@
+const proxyurl = 'https://cors-anywhere.herokuapp.com/'
+
 const getUdemyCourse = async id => {
-  const request = new Request(`${process.env.UDEMY_API}${id}/`, {
+  const request = new Request(`${proxyurl}${process.env.UDEMY_API}${id}/`, {
     header: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json;charset=utf-8',
