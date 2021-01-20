@@ -4,6 +4,7 @@ const getUdemyCourse = async id => {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json;charset=utf-8',
       Authorization: process.env.UDEMY_AUTH,
+      credentials: 'include',
     },
   })
 
