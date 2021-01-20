@@ -36,8 +36,6 @@ const Home = () => {
 
   const skills = data?.skills || []
 
-  console.log(user)
-
   return (
     <div className={styles.container}>
       <Head>
