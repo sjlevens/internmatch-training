@@ -66,8 +66,15 @@ const Skill = () => {
           modules || [],
         )}
       </div>
-      <div className={styles.module}>
-        {!curModule.name && <h5>Get started by choosing a module ⬆ </h5>}
+      {!curModule.name && <h5>Get started by choosing a module ⬆ </h5>}
+      {curModule.name === 'Business Communication Software' && (
+        <div className={styles.module}>
+          {['google.png', 'microsoft.png', 'teams.png', 'zoom.png', 'slack.png'].map(img => (
+            <img className={styles.image} src={`/${img}`} />
+          ))}
+        </div>
+      )}
+      <div>
         {map(
           ({ name, time, links, id }) => (
             <div key={id} className={styles.subject}>
